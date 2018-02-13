@@ -6,8 +6,8 @@
  */
 function format_price($price)
 {
-  $price = number_format(ceil($price), 0, '.', ' ');
-  return $price . ' ' . '₽';
+  $price = number_format(ceil($price), 0, ".",  " ");
+  return $price . " " . "₽";
 }
 
 /**
@@ -19,7 +19,7 @@ function format_price($price)
 function include_template($template, $vars)
 {
   if (!file_exists($template)) {
-    return '';
+    return "";
   }
 
   if (is_array($vars)) {
