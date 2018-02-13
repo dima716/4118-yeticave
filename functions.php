@@ -1,12 +1,7 @@
 <?php
 function format_price($price)
 {
-  $price = ceil($price);
-
-  if ($price > 1000) {
-    $price = number_format($price, 0, '.', ' ');
-  }
-
+  $price = number_format(ceil($price), 0, '.', ' ');
   return $price . ' ' . '₽';
 }
 
@@ -24,5 +19,3 @@ function include_template($template, $vars)
   require $template;
   return ob_get_clean();
 }
-
-?>
