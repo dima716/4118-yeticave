@@ -30,3 +30,27 @@ function include_template($template, $vars)
   require $template;
   return ob_get_clean();
 }
+
+/**
+ * Add leading zero to time if necessary
+ * @param $time
+ * @return string
+ */
+function format_time($time)
+{
+  return $time < 10 ? "0" . $time : $time;
+}
+
+/**
+ * Display formatted time left until midnight
+ * @return string
+ */
+function count_time_until_midnight()
+{
+  $diff = strtotime("tomorrow midnight") - strtotime("now");
+  $seconds = format_time($diff % 60);
+  $minutes = format_time(floor($diff / 60) % 60);
+  $hours = format_time(floor($diff / (60 * 60)));
+
+  return $hours . ":" . $minutes . ":" . $seconds;
+}
