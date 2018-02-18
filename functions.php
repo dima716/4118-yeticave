@@ -1,8 +1,8 @@
 <?php
 /**
  * Format a number with grouped thousands and add currency sign
- * @param $price
- * @return string
+ * @param integer $price price of a lot
+ * @return string formatted price with grouped thousands and currency sign
  */
 function format_price($price)
 {
@@ -12,9 +12,9 @@ function format_price($price)
 
 /**
  * Get content of template
- * @param $template
- * @param $vars
- * @return string
+ * @param string $template path to the template
+ * @param array $vars all variables that will be used inside template
+ * @return string html representation of template
  */
 function include_template($template, $vars)
 {
@@ -32,25 +32,15 @@ function include_template($template, $vars)
 }
 
 /**
- * Add leading zero to time if necessary
- * @param $time
- * @return string
- */
-function format_time($time)
-{
-  return $time < 10 ? "0" . $time : $time;
-}
-
-/**
  * Display formatted time left until midnight
- * @return string
+ * @return string how much time left until midnight in format HH:MM:SS
  */
 function count_time_until_midnight()
 {
-  $diff = strtotime("tomorrow midnight") - strtotime("now");
-  $seconds = format_time($diff % 60);
-  $minutes = format_time(floor($diff / 60) % 60);
-  $hours = format_time(floor($diff / (60 * 60)));
+  $now = new DateTime(date(DATE_ATOM));
+  $then = new DateTime(date(DATE_ATOM, mktime(24, 0, 0)));
 
-  return $hours . ":" . $minutes . ":" . $seconds;
+  $difference = $then->diff($now);
+
+  return $difference->format('%H:%I:%S');
 }
