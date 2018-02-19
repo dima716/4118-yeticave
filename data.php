@@ -19,6 +19,7 @@ $ads = [
     "name" => "2014 Rossignol District Snowboard",
     "category" => $categories["boards"],
     "price" => 10999,
+    "rate" => 10999,
     "url" => "img/lot-1.jpg",
     "description" => "Здесь будет описание лота"
   ],
@@ -26,6 +27,7 @@ $ads = [
     "name" => "DC Ply Mens 2016/2017 Snowboard",
     "category" => $categories["boards"],
     "price" => 159999,
+    "rate" => 159999,
     "url" => "img/lot-2.jpg",
     "description" => "Здесь будет описание лота"
   ],
@@ -33,6 +35,7 @@ $ads = [
     "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
     "category" => $categories["attachment"],
     "price" => 8000,
+    "rate" => 8000,
     "url" => "img/lot-3.jpg",
     "description" => "Здесь будет описание лота"
   ],
@@ -40,6 +43,7 @@ $ads = [
     "name" => "Ботинки для сноуборда DC Mutiny Charocal",
     "category" => $categories["boots"],
     "price" => 10999,
+    "rate" => 10999,
     "url" => "img/lot-4.jpg",
     "description" => "Здесь будет описание лота"
   ],
@@ -47,6 +51,7 @@ $ads = [
     "name" => "Куртка для сноуборда DC Mutiny Charocal",
     "category" => $categories["clothing"],
     "price" => 7500,
+    "rate" => 7500,
     "url" => "img/lot-5.jpg",
     "description" => "Здесь будет описание лота"
   ],
@@ -54,6 +59,7 @@ $ads = [
     "name" => "Маска Oakley Canopy",
     "category" => $categories["other"],
     "price" => 5400,
+    "rate" => 5400,
     "url" => "img/lot-6.jpg",
     "description" => "Здесь будет описание лота"
   ]

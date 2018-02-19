@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       "step" => $lot["lot-step"],
       "date" => $lot["lot-date"],
       "rate" => $lot["lot-rate"],
-      "url" => $lot["path"]
-    ]]);
+      "url" => $lot["path"],
+    ], "bets" => $bets]);
   }
 } else {
   $page_content = include_template("templates/add-lot.php", ["categories" => $categories]);
