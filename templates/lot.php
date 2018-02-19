@@ -19,13 +19,13 @@
             <span class="lot-item__cost"><?= format_price($lot["price"]) ?></span>
           </div>
           <div class="lot-item__min-cost">
-            Мин. ставка <span><?= format_price($lot["price"] + 2000) ?></span>
+            Мин. ставка <span><?= format_price($lot["rate"]) ?></span>
           </div>
         </div>
         <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
           <p class="lot-item__form-item">
             <label for="cost">Ваша ставка</label>
-            <input id="cost" type="number" name="cost" placeholder="<?= $lot["price"] + 2000 ?>">
+            <input id="cost" type="number" name="cost" placeholder="<?= $lot["rate"] ?>">
           </p>
           <button type="submit" class="button">Сделать ставку</button>
         </form>
