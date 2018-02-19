@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if (count($errors)) {
-    $page_content = include_template("templates/add-lot.php", ["lot" => $lot, "errors" => $errors]);
+    $page_content = include_template("templates/add-lot.php", ["lot" => $lot, "errors" => $errors, "categories" => $categories]);
   } else {
     $page_content = include_template("templates/lot.php", ["lot" => [
       "name" => $lot["lot-name"],
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ]]);
   }
 } else {
-  $page_content = include_template("templates/add-lot.php", []);
+  $page_content = include_template("templates/add-lot.php", ["categories" => $categories]);
 }
 
 $layout_content = include_template("templates/layout.php", [

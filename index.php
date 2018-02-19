@@ -2,7 +2,7 @@
 require_once "data.php";
 require_once "functions.php";
 
-$page_content = include_template("templates/index.php", ["ads" => $ads]);
+$page_content = include_template("templates/index.php", ["ads" => $ads, "categories" => $categories]);
 
 $layout_content = include_template("templates/layout.php", [
   "is_auth" => $is_auth,
