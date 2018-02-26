@@ -31,7 +31,7 @@
               <?= isset($errors["file"]) ? "form__item--invalid" : "" ?>
               <?= isset($lot["path"]) ? "form__item--uploaded" : "" ?>">
     <label>Изображение</label>
-    <div class="preview">wq
+    <div class="preview">
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
         <img
