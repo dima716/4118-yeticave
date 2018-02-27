@@ -27,13 +27,18 @@
       required><?= isset($lot["message"]) ? htmlspecialchars($lot["message"]) : "" ?></textarea>
     <span class="form__error"><?= $errors["message"] ?></span>
   </div>
-  <div class="form__item form__item--file <?= isset($errors["file"]) ? "form__item--invalid" : "" ?>">
-    <!-- form__item--uploaded -->
+  <div class="form__item form__item--file
+              <?= isset($errors["file"]) ? "form__item--invalid" : "" ?>
+              <?= isset($lot["path"]) ? "form__item--uploaded" : "" ?>">
     <label>Изображение</label>
     <div class="preview">
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
-        <img src="img/avatar.jpg" width="113" height="113" alt="Изображение лота">
+        <img
+          src="<?= isset($lot["path"]) ? $lot["path"] : "" ?>"
+          width="113"
+          height="113"
+          alt="Изображение лота">
       </div>
     </div>
     <div class="form__input-file">
