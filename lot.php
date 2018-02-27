@@ -2,16 +2,15 @@
 require_once "data.php";
 require_once "functions.php";
 
+session_start();
+
 if (isset($_GET)) {
-  $lot_id = $_GET['id'];
+  $lot_id = $_GET["id"];
 
   if (array_key_exists($lot_id, $ads)) {
     $lot = $ads[$lot_id];
     $page_content = include_template("templates/lot.php", ["lot" => $lot, "bets" => $bets]);
     $layout_content = include_template("templates/layout.php", [
-      "is_auth" => $is_auth,
-      "user_name" => $user_name,
-      "user_avatar" => $user_avatar,
       "page_title" => htmlspecialchars($lot["name"]),
       "page_content" => $page_content,
       "categories" => $categories

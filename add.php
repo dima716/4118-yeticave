@@ -2,6 +2,14 @@
 require_once "data.php";
 require_once "functions.php";
 
+session_start();
+
+if (!isset($_SESSION["user"])){
+  header("HTTP/1.0 403 Forbidden");
+  print("This page is only available for logged in users");
+  die();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lot = $_POST;
 
@@ -56,9 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $layout_content = include_template("templates/layout.php", [
-  "is_auth" => $is_auth,
-  "user_name" => $user_name,
-  "user_avatar" => $user_avatar,
   "page_title" => "Добавление лота",
   "page_content" => $page_content,
   "categories" => $categories
