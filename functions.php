@@ -42,5 +42,23 @@ function count_time_until_midnight()
 
   $difference = $then->diff($now);
 
-  return $difference->format('%H:%I:%S');
+  return $difference->format("%H:%I:%S");
+}
+
+/**
+ * @param string $email - user's email which is also a login
+ * @param array $users - array of users in which the user is searched
+ * @return object | null $result  - found user
+ */
+function search_user_by_email($email, $users) {
+	$result = null;
+
+	foreach ($users as $user) {
+		if ($user["email"] == $email) {
+			$result = $user;
+			break;
+		}
+	}
+
+	return $result;
 }
