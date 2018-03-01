@@ -2,9 +2,7 @@
 require_once "data.php";
 require_once "functions.php";
 
-session_start();
-
-if (isset($_GET)) {
+if (isset($_GET["id"])) {
   $lot_id = $_GET["id"];
 
   if (array_key_exists($lot_id, $ads)) {
@@ -13,7 +11,9 @@ if (isset($_GET)) {
     $layout_content = include_template("templates/layout.php", [
       "page_title" => htmlspecialchars($lot["name"]),
       "page_content" => $page_content,
-      "categories" => $categories
+      "categories" => $categories,
+      "is_auth" => $is_auth,
+      "user_name" => $user_name
     ]);
 
     $viewed_lots_indexes = [];
@@ -31,4 +31,7 @@ if (isset($_GET)) {
     header("HTTP/1.0 404 Not Found");
     print("Lot does not exist");
   }
+} else {
+  header("HTTP/1.0 404 Not Found");
+  print("Page is not found");
 }
