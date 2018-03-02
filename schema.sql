@@ -8,16 +8,18 @@ USE yeticave;
 
 CREATE TABLE categories (
   id   INT AUTO_INCREMENT,
-  name TINYTEXT,
+  name CHAR(128),
+  translation TINYTEXT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE users (
   id        INT AUTO_INCREMENT,
   email     CHAR(128),
-  name      TINYTEXT,
+  name      CHAR(66),
+  registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   password  CHAR(64),
-  image_url TINYTEXT,
+  avatar CHAR(100),
   contacts  TINYTEXT,
   PRIMARY KEY (id),
   UNIQUE KEY (email)
@@ -25,9 +27,9 @@ CREATE TABLE users (
 
 CREATE TABLE lots (
   id              INT AUTO_INCREMENT,
-  name            TINYTEXT,
-  description     TEXT,
-  image_url       TINYTEXT,
+  name            CHAR(66),
+  description     TINYTEXT,
+  image_url       CHAR(100),
   starting_price  INT UNSIGNED,
   rate_step       INT UNSIGNED,
   creation_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
