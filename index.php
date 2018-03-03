@@ -1,6 +1,5 @@
 <?php
-require_once "data.php";
-require_once "functions.php";
+require_once "init.php";
 
 $page_content = include_template("templates/index.php", [
   "ads" => $ads,
@@ -12,7 +11,8 @@ $layout_content = include_template("templates/layout.php", [
   "page_content" => $page_content,
   "categories" => $categories,
   "is_auth" => $is_auth,
-  "user_name" => $user_name
+  "user_name" => $user_name,
+  "user_avatar" => $user_avatar
 ]);
 
 print($layout_content);

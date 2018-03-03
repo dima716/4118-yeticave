@@ -22,6 +22,11 @@
 
     <nav class="user-menu">
       <?php if ($is_auth): ?>
+        <?php if (isset($user_avatar)): ?>
+          <div class="user-menu__image">
+            <img src="<?= $user_avatar; ?>" width="40" height="40" alt="Пользователь">
+          </div>
+        <?php endif; ?>
         <div class="user-menu__logged">
           <p><?= $user_name; ?></p>
           <a href="logout.php">Выход</a>
@@ -29,7 +34,7 @@
       <?php else: ?>
         <ul class="user-menu__list">
           <li class="user-menu__item">
-            <a href="#">Регистрация</a>
+            <a href="sign-up.php">Регистрация</a>
           </li>
           <li class="user-menu__item">
             <a href="login.php">Вход</a>
@@ -49,7 +54,7 @@
     <ul class="nav__list container">
       <?php foreach ($categories as $category) : ?>
         <li class="nav__item">
-          <a href="all-lots.html"><?= $category ?></a>
+          <a href="all-lots.html"><?= $category["name"] ?></a>
         </li>
       <?php endforeach; ?>
     </ul>
