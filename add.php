@@ -3,7 +3,7 @@ require_once "init.php";
 
 if (!isset($_SESSION["user"])){
   header("HTTP/1.0 403 Forbidden");
-  print("This page is only available for logged in users");
+  print("Эта страница доступна только для зарегистрированных пользователей");
   die();
 }
 
@@ -25,8 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $errors[$key] = "Это поле надо заполнить";
     }
   }
-
-  var_dump($lot);
 
   if (!empty($_FILES["lot-img"]["name"])) {
     $tmp_name = $_FILES["lot-img"]["tmp_name"];
