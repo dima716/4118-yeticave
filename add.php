@@ -2,8 +2,6 @@
 require_once "data.php";
 require_once "functions.php";
 
-session_start();
-
 if (!isset($_SESSION["user"])){
   header("HTTP/1.0 403 Forbidden");
   print("This page is only available for logged in users");
@@ -66,7 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $layout_content = include_template("templates/layout.php", [
   "page_title" => "Добавление лота",
   "page_content" => $page_content,
-  "categories" => $categories
+  "categories" => $categories,
+  "is_auth" => $is_auth,
+  "user_name" => $user_name
 ]);
 
 print($layout_content);

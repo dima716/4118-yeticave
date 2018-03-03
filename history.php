@@ -2,8 +2,6 @@
 require_once "data.php";
 require_once "functions.php";
 
-session_start();
-
 if (isset($_COOKIE["viewed_lots"])) {
   $viewed_lots_indexes = json_decode($_COOKIE["viewed_lots"]);
   $viewed_lots = [];
@@ -21,7 +19,9 @@ if (isset($_COOKIE["viewed_lots"])) {
   $layout_content = include_template("templates/layout.php", [
     "page_title" => "Главная",
     "page_content" => $page_content,
-    "categories" => $categories
+    "categories" => $categories,
+    "is_auth" => $is_auth,
+    "user_name" => $user_name
   ]);
 
   print($layout_content);

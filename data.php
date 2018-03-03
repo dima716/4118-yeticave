@@ -1,6 +1,15 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 
+session_start();
+
+$is_auth = isset($_SESSION["user"]);
+$user_name = null;
+
+if ($is_auth) {
+  $user_name = $_SESSION["user"]["name"];
+}
+
 $categories = [
   "boards" => "Доски и лыжи",
   "attachment" => "Крепления",
