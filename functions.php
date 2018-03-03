@@ -34,17 +34,18 @@ function include_template($template, $vars)
 }
 
 /**
- * Display formatted time left until midnight
- * @return string how much time left until midnight in format HH:MM:SS
+ * Display formatted time left until end of completion date
+ * @param $end_date
+ * @return string how much time left until end of completion date in format HH:MM:SS
  */
-function count_time_until_midnight()
+function count_time_until_end($end_date)
 {
-  $now = new DateTime(date(DATE_ATOM));
-  $then = new DateTime(date(DATE_ATOM, mktime(24, 0, 0)));
+  $now = new DateTime();
+  $then = new DateTime($end_date);
 
   $difference = $then->diff($now);
 
-  return $difference->format("%H:%I:%S");
+  return $difference->format("%D д. %H:%I:%S");
 }
 
 function show_error($error, $vars) {
