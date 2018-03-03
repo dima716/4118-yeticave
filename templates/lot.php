@@ -3,30 +3,30 @@
   <div class="lot-item__content">
     <div class="lot-item__left">
       <div class="lot-item__image">
-        <img src="<?= $lot["url"] ?>" width="730" height="548" alt="<?= htmlspecialchars($lot["name"]) ?>">
+        <img src="<?= $lot["image_url"] ?>" width="730" height="548" alt="<?= htmlspecialchars($lot["name"]) ?>">
       </div>
       <p class="lot-item__category">Категория: <span><?= $lot["category"] ?></span></p>
       <p class="lot-item__description"><?= htmlspecialchars($lot["description"]) ?></p>
     </div>
     <div class="lot-item__right">
-      <?php if (isset($_SESSION["user"])) : ?>
+      <?php if ($is_auth) : ?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
-            <?= count_time_until_midnight() ?>
+            <?= count_time_until_end($lot["completion_date"]) ?>
           </div>
           <div class="lot-item__cost-state">
             <div class="lot-item__rate">
               <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?= format_price($lot["price"]) ?></span>
+              <span class="lot-item__cost"><?= format_price($lot["starting_price"]) ?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?= format_price($lot["rate"]) ?></span>
+              Мин. ставка <span><?= format_price($lot["starting_price"] + $lot["rate_step"]) ?></span>
             </div>
           </div>
           <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
             <p class="lot-item__form-item">
               <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="<?= $lot["rate"] ?>">
+              <input id="cost" type="number" name="cost" placeholder="<?= $lot["starting_price"] + $lot["rate_step"] ?>">
             </p>
             <button type="submit" class="button">Сделать ставку</button>
           </form>
