@@ -1,7 +1,7 @@
 <?php
 require_once "init.php";
 
-if (!isset($_SESSION["user"])){
+if (!$is_auth) {
   header("HTTP/1.0 403 Forbidden");
   print("Эта страница доступна только для зарегистрированных пользователей");
   die();
@@ -10,33 +10,43 @@ if (!isset($_SESSION["user"])){
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lot = $_POST;
 
-  $required = ["lot-name", "category", "message", "lot-rate", "lot-step", "lot-date"];
-  $number = ["lot-rate", "lot-step"];
+  $required = ["name", "category_id", "message", "starting_price", "rate_step", "completion_date"];
+  $number = ["starting_price", "rate_step"];
 
   $errors = [];
-  foreach ($number as $key) {
-    if (!ctype_digit($_POST[$key])) {
-      $errors[$key] = "Это поле должно быть числом";
-    }
-  }
-
   foreach ($required as $key) {
-    if (empty($_POST[$key])) {
+    if (empty($_POST[$key]) && $_POST[$key] !== '0') {
       $errors[$key] = "Это поле надо заполнить";
     }
   }
 
-  if (!empty($_FILES["lot-img"]["name"])) {
-    $tmp_name = $_FILES["lot-img"]["tmp_name"];
-    $path = $_FILES["lot-img"]["name"];
+  foreach ($number as $key) {
+    if (!is_numeric($_POST[$key])) {
+      $errors[$key] = isset($errors[$key]) ? $errors[$key] : "Это поле должно быть числом";
+    } else if ($_POST[$key] <= 0) {
+      $errors[$key] =  isset($errors[$key]) ? $errors[$key] : "Это поле должно быть больше нуля";
+    }
+  }
 
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $file_type = finfo_file($finfo, $tmp_name);
-    if ($file_type !== "image/jpeg") {
-      $errors["file"] = "Загрузите картинку в формате JPEG";
+  if (!is_date_format_valid($_POST["completion_date"])) {
+    $errors["completion_date"] = "Введите дату в формате ДД.ММ.ГГГГ";
+  } elseif (!is_date_valid($_POST["completion_date"])) {
+    $errors["completion_date"] = "Введите корректную дату";
+  } elseif (strtotime($_POST["completion_date"]) <= strtotime("today")) {
+    $errors["completion_date"] = "Указанная дата должна быть больше текущей даты хотя бы на один день";
+  }
+
+  if (!empty($_FILES["lot_img"]["name"])) {
+    $tmp_name = $_FILES["lot_img"]["tmp_name"];
+    $path = $_FILES["lot_img"]["name"];
+
+    $file_type = mime_content_type($tmp_name);
+
+    if ($file_type !== "image/jpeg" && $file_type !== "image/png") {
+      $errors["file"] = "Загрузите картинку в разрешенных форматах: JPG, JPEG, PNG";
     } else {
       move_uploaded_file($tmp_name, "img/" . $path);
-      $lot["path"] = "img/" . $path;
+      $lot["image_url"] = "img/" . $path;
     }
   } else {
     $errors["file"] = "Вы не загрузили файл";
@@ -45,16 +55,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (count($errors)) {
     $page_content = include_template("templates/add-lot.php", ["lot" => $lot, "errors" => $errors, "categories" => $categories]);
   } else {
-    $page_content = include_template("templates/lot.php", ["lot" => [
-      "name" => $lot["lot-name"],
-      "category" => $lot["category"],
-      "description" => $lot["message"],
-      "price" => $lot["lot-rate"],
-      "step" => $lot["lot-step"],
-      "date" => $lot["lot-date"],
-      "rate" => $lot["lot-rate"],
-      "url" => $lot["path"],
-    ], "bets" => $bets]);
+    $sql = "INSERT INTO lots (
+      name, 
+      description, 
+      image_url, 
+      starting_price,
+      rate_step,
+      creation_date,
+      completion_date,
+      category_id,
+      author_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $data = [
+      $lot["name"],
+      $lot["message"],
+      $lot["image_url"],
+      $lot["starting_price"],
+      $lot["rate_step"],
+      date("Y-m-d H:i:s"),
+      date("Y-m-d H:i:s", strtotime($lot["completion_date"])),
+      $lot["category_id"],
+      $user_id
+    ];
+
+    $stmt = db_get_prepare_stmt(
+      $link,
+      $sql,
+      $data
+    );
+
+    $res = mysqli_stmt_execute($stmt);
+
+    if ($res) {
+      $lot_id = mysqli_insert_id($link);
+      header("Location: lot.php?id=" . $lot_id);
+      exit();
+    } else {
+      show_error(mysqli_error($link), [
+        "categories" => $categories,
+        "is_auth" => $is_auth,
+        "user_name" => $user_name,
+        "user_avatar" => $user_avatar
+      ]);
+    }
   }
 } else {
   $page_content = include_template("templates/add-lot.php", ["categories" => $categories]);

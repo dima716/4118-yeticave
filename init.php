@@ -8,10 +8,12 @@ session_start();
 $is_auth = isset($_SESSION["user"]);
 $user_name = null;
 $user_avatar = null;
+$user_id = null;
 
 if ($is_auth) {
   $user_name = $_SESSION["user"]["name"];
   $user_avatar = $_SESSION["user"]["avatar"];
+  $user_id = $_SESSION["user"]["id"];
 }
 
 $db = require_once "config/db.php";
