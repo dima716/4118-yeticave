@@ -1051,9 +1051,9 @@ input:invalid .form__error{
 }
 
 .lot-item__form .button {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
   padding: 6px 20px 7px;
   height: 38px;
 }
