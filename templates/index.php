@@ -3,9 +3,9 @@
   <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное
     снаряжение.</p>
   <ul class="promo__list">
-    <?php foreach ($categories as $key => $value) : ?>
-      <li class="promo__item promo__item--<?= $key ?>">
-        <a class="promo__link" href="all-lots.html"><?= $value ?></a>
+    <?php foreach ($categories as $category) : ?>
+      <li class="promo__item promo__item--<?= $category["alias"] ?>">
+        <a class="promo__link" href="all-lots.html"><?= $category["name"] ?></a>
       </li>
     <?php endforeach; ?>
   </ul>

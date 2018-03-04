@@ -1,6 +1,5 @@
 <?php
-require_once "data.php";
-require_once "functions.php";
+require_once "init.php";
 
 if (isset($_COOKIE["viewed_lots"])) {
   $viewed_lots_indexes = json_decode($_COOKIE["viewed_lots"]);
@@ -21,7 +20,8 @@ if (isset($_COOKIE["viewed_lots"])) {
     "page_content" => $page_content,
     "categories" => $categories,
     "is_auth" => $is_auth,
-    "user_name" => $user_name
+    "user_name" => $user_name,
+    "user_avatar" => $user_avatar
   ]);
 
   print($layout_content);

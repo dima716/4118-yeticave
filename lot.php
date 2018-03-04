@@ -1,6 +1,5 @@
 <?php
-require_once "data.php";
-require_once "functions.php";
+require_once "init.php";
 
 if (isset($_GET["id"])) {
   $lot_id = $_GET["id"];
@@ -13,7 +12,8 @@ if (isset($_GET["id"])) {
       "page_content" => $page_content,
       "categories" => $categories,
       "is_auth" => $is_auth,
-      "user_name" => $user_name
+      "user_name" => $user_name,
+      "user_avatar" => $user_avatar
     ]);
 
     $viewed_lots_indexes = [];

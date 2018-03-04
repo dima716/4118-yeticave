@@ -1,6 +1,5 @@
 <?php
-require_once "data.php";
-require_once "functions.php";
+require_once "init.php";
 
 if (!isset($_SESSION["user"])){
   header("HTTP/1.0 403 Forbidden");
@@ -26,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $errors[$key] = "Это поле надо заполнить";
     }
   }
+
+  var_dump($lot);
 
   if (!empty($_FILES["lot-img"]["name"])) {
     $tmp_name = $_FILES["lot-img"]["tmp_name"];

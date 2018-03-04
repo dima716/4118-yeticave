@@ -1,4 +1,6 @@
 <?php
+require_once "mysql_helper.php";
+
 /**
  * Format a number with grouped thousands and add currency sign
  * @param integer $price price of a lot
@@ -45,20 +47,17 @@ function count_time_until_midnight()
   return $difference->format("%H:%I:%S");
 }
 
-/**
- * @param string $email - user's email which is also a login
- * @param array $users - array of users in which the user is searched
- * @return object | null $result  - found user
- */
-function search_user_by_email($email, $users) {
-	$result = null;
-
-	foreach ($users as $user) {
-		if ($user["email"] == $email) {
-			$result = $user;
-			break;
-		}
-	}
-
-	return $result;
+function show_error($error, $vars) {
+  header("HTTP/1.0 500 Internal Server Error");
+  $page_content = include_template("templates/error.php", ["error" => $error]);
+  $layout_content = include_template("templates/layout.php", [
+    "page_title" => "Ошибка",
+    "page_content" => $page_content,
+    "categories" => $vars["categories"],
+    "is_auth" => $vars["is_auth"],
+    "user_name" => $vars["user_name"],
+    "user_avatar" => $vars["user_avatar"]
+  ]);
+  print($layout_content);
+  die();
 }

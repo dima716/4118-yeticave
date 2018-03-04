@@ -1,7 +1,7 @@
 USE yeticave;
 
 INSERT INTO categories
-  (name, translation)
+  (alias, name)
 VALUES
   ('boards', 'Доски и лыжи'),
   ('attachment', 'Крепления'),
@@ -16,6 +16,8 @@ VALUES
   ('ignat.v@gmail.com', 'Игнат', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka'),
   ('kitty_93@li.ru', 'Леночка', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa'),
   ('warrior07@mail.ru', 'Руслан', '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW');
+
+INSERT INTO users (email, name, password, avatar, contacts) VALUES (?, ?, ?, ?, ?);
 
 INSERT INTO lots
   (name, description, image_url, starting_price, rate_step, creation_date, completion_date, category_id, author_id)
