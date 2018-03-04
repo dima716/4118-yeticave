@@ -1,6 +1,33 @@
 <?php
 require_once "init.php";
 
+$ads = [];
+
+$sql = "SELECT
+  l.id,
+  l.name,
+  l.starting_price,
+  l.image_url,
+  c.name AS 'category',
+  l.completion_date
+FROM lots l
+  JOIN categories c ON c.id = l.category_id
+WHERE NOW() < l.completion_date
+ORDER BY l.creation_date DESC";
+
+$result = mysqli_query($link, $sql);
+
+if ($result) {
+  $ads = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+  $error = mysqli_error($link);
+  show_error($error, [
+    "categories" => $categories,
+    "is_auth" => $is_auth,
+    "user_name" => $user_name
+  ]);
+}
+
 $page_content = include_template("templates/index.php", [
   "ads" => $ads,
   "categories" => $categories
