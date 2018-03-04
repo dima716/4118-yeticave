@@ -35,7 +35,7 @@ function include_template($template, $vars)
 
 /**
  * Display formatted time left until end of completion date
- * @param $end_date
+ * @param $end_date completion date
  * @return string how much time left until end of completion date in format HH:MM:SS
  */
 function count_time_until_end($end_date)
@@ -45,9 +45,14 @@ function count_time_until_end($end_date)
 
   $difference = $then->diff($now);
 
-  return $difference->format("%D д. %H:%I:%S");
+  return $difference->format("%a д. %H:%I:%S");
 }
 
+/**
+ * Show error page template
+ * @param $error string error message
+ * @param $vars array list of variables to pass in template
+ */
 function show_error($error, $vars) {
   header("HTTP/1.0 500 Internal Server Error");
   $page_content = include_template("templates/error.php", ["error" => $error]);
@@ -61,4 +66,25 @@ function show_error($error, $vars) {
   ]);
   print($layout_content);
   die();
+}
+
+/**
+ * Check if date is valid
+ * @param $date date to check
+ * @return bool result of checking
+ */
+function is_date_valid($date) {
+    if (!strtotime($date)) return false;
+
+    list($day, $month, $year) = explode('.', $date);
+    return checkdate($month, $day, $year);
+}
+
+/**
+ * Check if date has a valid format of DD.MM.YYYY
+ * @param $date date to check
+ * @return bool result of checking
+ */
+function is_date_format_valid($date) {
+  return preg_match("/(0[1-9]|[12][0-9]|3[01])[ \.](0[1-9]|1[012])[ \.](19|20)\d\d/", $date) !== 0;
 }

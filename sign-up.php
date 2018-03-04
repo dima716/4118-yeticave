@@ -32,9 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!empty($_FILES["avatar"]["name"])) {
     $tmp_name = $_FILES["avatar"]["tmp_name"];
     $path = $_FILES["avatar"]["name"];
+    $file_type = mime_content_type($tmp_name);
 
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $file_type = finfo_file($finfo, $tmp_name);
     if ($file_type !== "image/jpeg" && $file_type !== "image/png") {
       $errors["file"] = "Загрузите картинку в разрешенных форматах: JPG, JPEG, PNG";
     } else {
@@ -47,19 +46,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $page_content = include_template("templates/sign-up.php", ["user_data" => $user_data, "errors" => $errors, "categories" => $categories]);
   } else {
     if ($user_data["avatar"]) {
-      $sql = "INSERT INTO users (email, name, password, avatar, contacts) VALUES (?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO users (email, name, registration_date, password, avatar, contacts) VALUES (?, ?, ?, ?, ?, ?)";
       $data = [
         $user_data["email"],
         $user_data["name"],
+        date("Y-m-d H:i:s"),
         password_hash($user_data["password"], PASSWORD_BCRYPT),
         $user_data["avatar"],
         $user_data["message"]
       ];
     } else {
-      $sql = "INSERT INTO users (email, name, password, contacts) VALUES (?, ?, ?, ?)";
+      $sql = "INSERT INTO users (email, name, registration_date, password, contacts) VALUES (?, ?, ?, ?, ?)";
       $data = [
         $user_data["email"],
         $user_data["name"],
+        date("Y-m-d H:i:s"),
         password_hash($user_data["password"], PASSWORD_BCRYPT),
         $user_data["message"]
       ];

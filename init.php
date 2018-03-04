@@ -8,10 +8,12 @@ session_start();
 $is_auth = isset($_SESSION["user"]);
 $user_name = null;
 $user_avatar = null;
+$user_id = null;
 
 if ($is_auth) {
   $user_name = $_SESSION["user"]["name"];
   $user_avatar = $_SESSION["user"]["avatar"];
+  $user_id = $_SESSION["user"]["id"];
 }
 
 $db = require_once "config/db.php";
@@ -26,7 +28,8 @@ if (!$link) {
   show_error($error, [
     "categories" => $categories,
     "is_auth" => $is_auth,
-    "user_name" => $user_name
+    "user_name" => $user_name,
+    "user_avatar" => $user_avatar
   ]);
 } else {
   $sql = "SELECT id, name, alias FROM categories";
@@ -39,15 +42,8 @@ if (!$link) {
     show_error($error, [
       "categories" => $categories,
       "is_auth" => $is_auth,
-      "user_name" => $user_name
+      "user_name" => $user_name,
+      "user_avatar" => $user_avatar
     ]);
   }
 }
-
-// ставки пользователей, которыми надо заполнить таблицу
-$bets = [
-  ["name" => "Иван", "price" => 11500, "ts" => strtotime("-" . rand(1, 50) . " minute")],
-  ["name" => "Константин", "price" => 11000, "ts" => strtotime("-" . rand(1, 18) . " hour")],
-  ["name" => "Евгений", "price" => 10500, "ts" => strtotime("-" . rand(25, 50) . " hour")],
-  ["name" => "Семён", "price" => 10000, "ts" => strtotime("last week")]
-];

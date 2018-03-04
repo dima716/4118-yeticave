@@ -19,7 +19,7 @@ CREATE TABLE users (
   id                INT       AUTO_INCREMENT,
   email             CHAR(128),
   name              CHAR(66),
-  registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  registration_date DATETIME,
   password          CHAR(64),
   avatar            CHAR(100),
   contacts          TINYTEXT,
@@ -34,8 +34,8 @@ CREATE TABLE lots (
   image_url       CHAR(100),
   starting_price  INT UNSIGNED,
   rate_step       INT UNSIGNED,
-  creation_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  completion_date TIMESTAMP,
+  creation_date   DATETIME,
+  completion_date DATETIME,
   category_id     INT,
   winner_id       INT,
   author_id       INT,
@@ -53,7 +53,7 @@ CREATE TABLE lots (
 
 CREATE TABLE rates (
   id             INT       AUTO_INCREMENT,
-  placement_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  placement_date DATETIME,
   amount         INT UNSIGNED,
   user_id        INT,
   lot_id         INT,
