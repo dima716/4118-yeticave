@@ -109,7 +109,8 @@ $layout_content = include_template("templates/layout.php", [
   "page_content" => $page_content,
   "categories" => $categories,
   "is_auth" => $is_auth,
-  "user_name" => $user_name
+  "user_name" => $user_name,
+  "user_avatar" => $user_avatar
 ]);
 
 print($layout_content);

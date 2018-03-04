@@ -24,7 +24,8 @@ if ($result) {
   show_error($error, [
     "categories" => $categories,
     "is_auth" => $is_auth,
-    "user_name" => $user_name
+    "user_name" => $user_name,
+    "user_avatar" => $user_avatar
   ]);
 }
 
