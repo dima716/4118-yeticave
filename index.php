@@ -2,6 +2,13 @@
 require_once "init.php";
 
 $ads = [];
+$category = null;
+
+if (isset($_GET["category"])) {
+  $category = mysqli_real_escape_string($link, $_GET["category"]);
+}
+
+$condition = is_null($category) ? "" : "AND c.alias = \"" . $category . "\"";
 
 $sql = "SELECT
   l.id,
@@ -12,8 +19,8 @@ $sql = "SELECT
   l.completion_date
 FROM lots l
   JOIN categories c ON c.id = l.category_id
-WHERE NOW() < l.completion_date
-ORDER BY l.creation_date DESC";
+WHERE NOW() < l.completion_date " . $condition .
+  " ORDER BY l.creation_date DESC";
 
 $result = mysqli_query($link, $sql);
 
