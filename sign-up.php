@@ -12,21 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
-  if (!count($errors)) {
-    if (!filter_var($user_data["email"], FILTER_VALIDATE_EMAIL)) {
-      $errors["email"] = "Введите корректный email";
-    } elseif ($result = mysqli_query($link, "SELECT id FROM users WHERE email = \"" . mysqli_real_escape_string($link, $user_data["email"]) . "\"")) {
-      if (mysqli_num_rows($result)) {
-        $errors["email"] = "Пользователь с таким email уже существует. Введите другой email";
-      }
-    } else {
-      show_error(mysqli_error($link), [
-        "categories" => $categories,
-        "is_auth" => $is_auth,
-        "user_name" => $user_name,
-        "user_avatar" => $user_avatar
-      ]);
+  if (!filter_var($user_data["email"], FILTER_VALIDATE_EMAIL)) {
+    $errors["email"] = isset($errors["email"]) ? $errors["email"] : "Введите корректный email";
+  } elseif ($result = mysqli_query($link, "SELECT id FROM users WHERE email = \"" . mysqli_real_escape_string($link, $user_data["email"]) . "\"")) {
+    if (mysqli_num_rows($result)) {
+      $errors["email"] = "Пользователь с таким email уже существует. Введите другой email";
     }
+  } else {
+    show_error(mysqli_error($link), [
+      "categories" => $categories,
+      "is_auth" => $is_auth,
+      "user_name" => $user_name,
+      "user_avatar" => $user_avatar
+    ]);
   }
 
   if (!empty($_FILES["avatar"]["name"])) {
