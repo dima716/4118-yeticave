@@ -28,14 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
-  if (!in_array($lot["category_id"], array_column($categories, "id"))) {
+  if (!is_category_exists($lot["category_id"], $categories)) {
     $errors["category_id"] = "Данной категории не существует";
-  }
-
-  foreach ($categories as $category) {
-    if ($category["id"] !== $lot["category_id"]) {
-
-    }
   }
 
   if (!is_date_format_valid($_POST["completion_date"])) {

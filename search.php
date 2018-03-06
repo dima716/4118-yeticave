@@ -3,7 +3,7 @@ require_once "init.php";
 
 $lots = [];
 $search = '';
-$limit = 2;
+$limit = 9;
 $offset = 0;
 $current_page = 0;
 $pages = 1;
@@ -17,11 +17,13 @@ if (!empty($_GET["search"])) {
   if ($result) {
     $total_rows = mysqli_num_rows($result);
     $pages = intval(round($total_rows / $limit));
-    $current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 0;
 
-    if ($current_page > 0 && $current_page <= $pages - 1) {
-      $offset = $current_page * $limit;
+    if (isset($_GET["page"])) {
+      $page = intval($_GET["page"]);
+      $current_page = $page > 0 && $page <= $pages - 1 ? $page : 0;
     }
+
+    $offset = $current_page * $limit;
 
     $condition = "LIMIT " . $limit . " OFFSET " . $offset;
 

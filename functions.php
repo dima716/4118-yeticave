@@ -97,3 +97,18 @@ function is_date_format_valid($date)
 {
   return preg_match("/(0[1-9]|[12][0-9]|3[01])[ \.](0[1-9]|1[012])[ \.](19|20)\d\d/", $date) !== 0;
 }
+
+function get_category_by_alias($alias, $categories) {
+  $result = null;
+
+  foreach($categories as $category) {
+    if ($category["alias"] === $alias) {
+      $result = $category;
+    }
+  }
+  return $result;
+}
+
+function is_category_exists($category_id, $categories) {
+  return in_array($category_id, array_column($categories, "id"));
+}
