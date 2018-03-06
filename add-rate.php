@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else if ($_POST["rate"] <= 0) {
     $errors["rate"] = isset($errors["rate"]) ? $errors["rate"] : "Это поле должно быть больше нуля";
   } else if ($_POST["rate"] < $_POST["current_price"] + $_POST["rate_step"]) {
-    $errors["rate"] = isset($errors["rate"]) ? $errors["rate"] : "Значение должно быть больше, чем текущая цена лота + минимальная ставка";
+    $errors["rate"] = isset($errors["rate"]) ? $errors["rate"] : "Значение должно быть больше или равно минимальной става";
   }
 
   if (count($errors)) {
@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result) {
           $rates = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-          $is_lot_completed = strtotime("now") > strtotime($lot["completion_date"]);
+          $is_lot_completed = compare_dates_without_time("today", $lot["completion_date"],">=");
+
           $is_lot_created_by_current_user = $lot["author_id"] === $user_id;
           $is_current_user_made_rate = false;
 

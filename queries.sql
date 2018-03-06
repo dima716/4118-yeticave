@@ -81,7 +81,6 @@ FROM rates r
         FROM rates) sub ON DATE(r.placement_date) = sub.last_placement_date
 WHERE r.lot_id = 3;
 
-
 SELECT
   r.id,
   r.placement_date,
