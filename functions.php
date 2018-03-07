@@ -8,7 +8,7 @@ require_once "mysql_helper.php";
  */
 function format_price($price)
 {
-  $price = number_format(ceil($price), 0, ".",  " ");
+  $price = number_format(ceil($price), 0, ".", " ");
   return $price . " " . "₽";
 }
 
@@ -20,17 +20,19 @@ function format_price($price)
  */
 function include_template($template, $vars)
 {
-  if (!file_exists($template)) {
-    return "";
+  $result = "";
+
+  if (file_exists($template)) {
+    if (is_array($vars)) {
+      extract($vars);
+    }
+
+    ob_start();
+    require $template;
+    $result = ob_get_clean();
   }
 
-  if (is_array($vars)) {
-    extract($vars);
-  }
-
-  ob_start();
-  require $template;
-  return ob_get_clean();
+  return $result;
 }
 
 /**
@@ -53,7 +55,8 @@ function count_time_until_end($end_date)
  * @param $error string error message
  * @param $vars array list of variables to pass in template
  */
-function show_error($error, $vars) {
+function show_error($error, $vars)
+{
   header("HTTP/1.0 500 Internal Server Error");
   $page_content = include_template("templates/error.php", ["error" => $error]);
   $layout_content = include_template("templates/layout.php", [
@@ -73,11 +76,16 @@ function show_error($error, $vars) {
  * @param $date date to check
  * @return bool result of checking
  */
-function is_date_valid($date) {
-    if (!strtotime($date)) return false;
+function is_date_valid($date)
+{
+  $is_date_valid = false;
 
+  if (strtotime($date)) {
     list($day, $month, $year) = explode('.', $date);
-    return checkdate($month, $day, $year);
+    $is_date_valid = checkdate($month, $day, $year);
+  }
+
+  return $is_date_valid;
 }
 
 /**
@@ -85,6 +93,22 @@ function is_date_valid($date) {
  * @param $date date to check
  * @return bool result of checking
  */
-function is_date_format_valid($date) {
+function is_date_format_valid($date)
+{
   return preg_match("/(0[1-9]|[12][0-9]|3[01])[ \.](0[1-9]|1[012])[ \.](19|20)\d\d/", $date) !== 0;
+}
+
+function get_category_by_alias($alias, $categories) {
+  $result = null;
+
+  foreach($categories as $category) {
+    if ($category["alias"] === $alias) {
+      $result = $category;
+    }
+  }
+  return $result;
+}
+
+function is_category_exists($category_id, $categories) {
+  return in_array($category_id, array_column($categories, "id"));
 }

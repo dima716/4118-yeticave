@@ -14,11 +14,11 @@
     <a href="index.php" class="main-header__logo">
       <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
     </a>
-    <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
+    <form class="main-header__search" method="get" action="search.php">
       <input type="search" name="search" placeholder="Поиск лота">
       <input class="main-header__search-btn" type="submit" name="find" value="Найти">
     </form>
-    <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
+    <a class="main-header__add-lot button" href="add-lot.php">Добавить лот</a>
 
     <nav class="user-menu">
       <?php if ($is_auth): ?>
@@ -54,7 +54,7 @@
     <ul class="nav__list container">
       <?php foreach ($categories as $category) : ?>
         <li class="nav__item">
-          <a href="all-lots.html"><?= $category["name"] ?></a>
+          <a href="index.php?category=<?= $category["alias"] ?>"><?= $category["name"] ?></a>
         </li>
       <?php endforeach; ?>
     </ul>

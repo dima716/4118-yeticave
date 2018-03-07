@@ -28,8 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  if (!is_category_exists($lot["category_id"], $categories)) {
+    $errors["category_id"] = "Данной категории не существует";
+  }
+
   if (!is_date_format_valid($_POST["completion_date"])) {
-    $errors["completion_date"] = "Введите дату в формате ДД.ММ.ГГГГ";
+    $errors["completion_date"] = isset($errors["completion_date"]) ? $errors["completion_date"] : "Введите дату в формате ДД.ММ.ГГГГ";
   } elseif (!is_date_valid($_POST["completion_date"])) {
     $errors["completion_date"] = "Введите корректную дату";
   } elseif (strtotime($_POST["completion_date"]) <= strtotime("today")) {

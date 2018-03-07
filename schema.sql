@@ -48,7 +48,8 @@ CREATE TABLE lots (
   REFERENCES users (id),
   INDEX (category_id),
   INDEX (winner_id),
-  INDEX (author_id)
+  INDEX (author_id),
+  FULLTEXT (name, description)
 );
 
 CREATE TABLE rates (
@@ -65,3 +66,4 @@ CREATE TABLE rates (
   INDEX (user_id),
   INDEX (lot_id)
 );
+

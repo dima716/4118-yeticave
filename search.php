@@ -2,17 +2,16 @@
 require_once "init.php";
 
 $lots = [];
-$selected_category_alias = null;
+$search = '';
 $limit = 9;
 $offset = 0;
 $current_page = 0;
 $pages = 1;
 
-if (isset($_GET["category"])) {
-  $selected_category_alias = mysqli_real_escape_string($link, $_GET["category"]);
+if (!empty($_GET["search"])) {
+  $search = mysqli_escape_string($link, trim($_GET["search"]));
 
-  $sql = "SELECT * FROM lots l JOIN categories c ON c.id = l.category_id WHERE NOW() < l.completion_date AND c.alias = '" . $selected_category_alias . "'";
-
+  $sql = "SELECT * FROM lots WHERE name LIKE '%" . $search . "%'" . " OR description LIKE '%" . $search . "%'";
   $result = mysqli_query($link, $sql);
 
   if ($result) {
@@ -37,8 +36,8 @@ if (isset($_GET["category"])) {
       l.completion_date
     FROM lots l
       JOIN categories c ON c.id = l.category_id
-    WHERE NOW() < l.completion_date AND c.alias = '" . $selected_category_alias . "'" .
-    " ORDER BY l.creation_date DESC "  . $condition;
+    WHERE l.name LIKE '%" . $search . "%'" . " OR l.description LIKE '%" . $search . "%'" .
+      " ORDER BY l.creation_date DESC " . $condition;
 
     $result = mysqli_query($link, $sql);
 
@@ -62,49 +61,22 @@ if (isset($_GET["category"])) {
       "user_avatar" => $user_avatar
     ]);
   }
-} else {
-  $sql = "SELECT
-    l.id,
-    l.name,
-    l.starting_price,
-    l.image_url,
-    c.name AS 'category',
-    l.completion_date
-  FROM lots l
-    JOIN categories c ON c.id = l.category_id
-  WHERE NOW() < l.completion_date
-    ORDER BY l.creation_date DESC";
-
-  $result = mysqli_query($link, $sql);
-
-  if ($result) {
-    $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
-  } else {
-    $error = mysqli_error($link);
-    show_error($error, [
-      "categories" => $categories,
-      "is_auth" => $is_auth,
-      "user_name" => $user_name,
-      "user_avatar" => $user_avatar
-    ]);
-  }
 }
 
-$page_content = include_template("templates/index.php", [
+$page_content = include_template("templates/search.php", [
+  "search" => $search,
   "lots" => $lots,
-  "categories" => $categories,
-  "selected_category" => get_category_by_alias($selected_category_alias, $categories),
   "pages" => $pages,
   "current_page" => $current_page
 ]);
 
 $layout_content = include_template("templates/layout.php", [
-  "page_title" => "Главная",
+  "page_title" => "Поиск " . $search,
   "page_content" => $page_content,
   "categories" => $categories,
   "is_auth" => $is_auth,
   "user_name" => $user_name,
-  "user_avatar" => $user_avatar
+  "user_avatar" => $user_avatar,
 ]);
 
 print($layout_content);

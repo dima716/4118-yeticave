@@ -1,4 +1,4 @@
-<form class="form form--add-lot container <?= isset($errors) ? "form--invalid" : "" ?>" action="add.php" method="post"
+<form class="form form--add-lot container <?= isset($errors) ? "form--invalid" : "" ?>" action="add-lot.php" method="post"
   enctype="multipart/form-data" novalidate>
   <!-- form--invalid -->
   <h2>Добавление лота</h2>
@@ -6,7 +6,7 @@
     <div class="form__item <?= isset($errors["name"]) ? "form__item--invalid" : "" ?>"> <!-- form__item--invalid -->
       <label for="name">Наименование</label>
       <input id="name" type="text" name="name" placeholder="Введите наименование лота"
-        value="<?= isset($lot["name"]) ? $lot["name"] : "" ?>" required>
+        value="<?= isset($lot["name"]) ? htmlspecialchars($lot["name"]) : "" ?>" required>
       <span class="form__error"><?= $errors["name"] ?></span>
     </div>
     <div class="form__item <?= isset($errors["category_id"]) ? "form__item--invalid" : "" ?>">
@@ -35,14 +35,14 @@
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
         <img
-          src="<?= isset($lot["image_url"]) ? $lot["image_url"] : "" ?>"
+          src="<?= isset($lot["image_url"]) ? htmlspecialchars($lot["image_url"]) : "" ?>"
           width="113"
           height="113"
           alt="Изображение лота">
       </div>
     </div>
     <div class="form__input-file">
-      <input class="visually-hidden" name="lot_img" type="file" id="lot_img" value="<?= isset($lot["image_url"]) ? $lot["image_url"] : "" ?>" required>
+      <input class="visually-hidden" name="lot_img" type="file" id="lot_img" required>
       <label for="lot_img">
         <span>+ Добавить</span>
       </label>
@@ -53,19 +53,20 @@
     <div class="form__item form__item--small <?= isset($errors["starting_price"]) ? "form__item--invalid" : "" ?>">
       <label for="starting_price">Начальная цена</label>
       <input id="starting_price" type="number" name="starting_price" placeholder="0"
-        value="<?= isset($lot["starting_price"]) ? $lot["starting_price"] : "" ?>" required>
+        value="<?= isset($lot["starting_price"]) ? htmlspecialchars($lot["starting_price"]) : "" ?>" required>
       <span class="form__error"><?= $errors["starting_price"] ?></span>
     </div>
     <div class="form__item form__item--small <?= isset($errors["rate_step"]) ? "form__item--invalid" : "" ?>">
       <label for="rate_step">Шаг ставки</label>
       <input id="rate_step" type="number" name="rate_step" placeholder="0"
-        value="<?= isset($lot["rate_step"]) ? $lot["rate_step"] : "" ?>" required>
+        value="<?= isset($lot["rate_step"]) ? htmlspecialchars($lot["rate_step"]) : "" ?>" required>
       <span class="form__error"><?= $errors["rate_step"] ?></span>
     </div>
     <div class="form__item <?= isset($errors["completion_date"]) ? "form__item--invalid" : "" ?>">
       <label for="completion_date">Дата окончания торгов</label>
       <input class="form__input-date" id="completion_date" type="text" name="completion_date"
-        value="<?= isset($lot["completion_date"]) ? $lot["completion_date"] : "" ?>" required>
+        placeholder="ДД.ММ.ГГГГ"
+        value="<?= isset($lot["completion_date"]) ? htmlspecialchars($lot["completion_date"]) : "" ?>" required>
       <span class="form__error"><?= $errors["completion_date"] ?></span>
     </div>
   </div>
