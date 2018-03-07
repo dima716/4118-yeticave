@@ -92,3 +92,5 @@ FROM rates r
   JOIN users u ON u.id = r.user_id
 WHERE r.lot_id = 5
 ORDER BY r.placement_date DESC;
+
+

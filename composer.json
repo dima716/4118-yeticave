@@ -7,5 +7,7 @@
             "email": "dima716@yandex.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
 }

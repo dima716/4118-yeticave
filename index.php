@@ -1,5 +1,6 @@
 <?php
 require_once "init.php";
+require_once "getwinner.php";
 
 $lots = [];
 $selected_category_alias = null;
