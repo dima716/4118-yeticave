@@ -55,7 +55,7 @@ if (isset($_GET["id"])) {
 
         $lot["current_price"] = $lot["starting_price"];
 
-        foreach ($rates as $rate) {
+        foreach ($rates as &$rate) {
           if ($rate["user_id"] === $user_id) {
             $is_current_user_made_rate = true;
           }

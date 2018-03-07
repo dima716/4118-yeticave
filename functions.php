@@ -1,6 +1,9 @@
 <?php
 require_once "mysql_helper.php";
 
+use Carbon\Carbon;
+Carbon::setLocale('ru');
+
 /**
  * Format a number with grouped thousands and add currency sign
  * @param integer $price price of a lot
@@ -127,6 +130,14 @@ function compare_dates_without_time($date_a, $date_b, $operator)
   }
 
   return $result;
+}
+
+/**
+ * @param string $date string representation of date e.g. "2018-02-01 12:30"
+ * @return string formatted string e.g. "2 hours ago"
+ */
+function get_human_readable_date($date) {
+  return Carbon::createFromTimeStamp(strtotime($date), "Europe/Moscow")->diffForHumans();
 }
 
 /**

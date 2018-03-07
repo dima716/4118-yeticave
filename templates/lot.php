@@ -27,15 +27,11 @@
           ">
           <p class="lot-item__form-item <?= isset($errors["rate"]) ? "form__item--invalid" : "" ?>">
             <label for="rate">Ваша ставка</label>
-            <input id="rate" type="number" name="rate" placeholder="<?= $lot["current_price"] + $lot["rate_step"] ?>"
+            <input id="rate" type="number" name="amount" placeholder="<?= $lot["current_price"] + $lot["rate_step"] ?>"
               value="<?= isset($lot["rate"]) ? $lot["rate"] : "" ?>">
             <span class="form__error"><?= isset($errors["rate"]) ? $errors["rate"] : "" ?></span>
             <input class="visually-hidden" name="lot_id" type="hidden" id="lot_id"
-              value="<?= isset($lot["id"]) ? $lot["id"] : "" ?>" required>
-            <input class="visually-hidden" name="current_price" type="hidden" id="current_price"
-              value="<?= isset($lot["current_price"]) ? $lot["current_price"] : "" ?>" required>
-            <input class="visually-hidden" name="rate_step" type="hidden" id="rate_step"
-              value="<?= isset($lot["rate_step"]) ? $lot["rate_step"] : "" ?>" required>
+              value="<?= isset($lot["id"]) ? $lot["id"] : "" ?>">
           </p>
           <button type="submit" class="button">Сделать ставку</button>
           </form>
@@ -48,7 +44,7 @@
             <tr class="history__item">
               <td class="history__name"><?= $rate["user_name"] ?></td>
               <td class="history__price"><?= format_price($rate["amount"]) ?></td>
-              <td class="history__time"><?= date("d.m.y", strtotime($rate["placement_date"])) . " в " . date("H:i", strtotime($rate["placement_date"])) ?></td>
+              <td class="history__time"><?= get_human_readable_date($rate["placement_date"]) ?></td>
             </tr>
           <?php endforeach ?>
         </table>
