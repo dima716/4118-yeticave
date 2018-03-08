@@ -14,6 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  if (!filter_var($user_data["email"], FILTER_VALIDATE_EMAIL)) {
+    $errors["email"] = isset($errors["email"]) ? $errors["email"] : "Введите корректный email";
+  }
+
   if (!count($errors)) {
     $sql = "SELECT id, email, name, registration_date, password, avatar, contacts FROM users WHERE email = \"" . mysqli_real_escape_string($link, $user_data["email"]) . "\"";
 
