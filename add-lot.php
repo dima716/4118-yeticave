@@ -3,7 +3,12 @@ require_once "init.php";
 
 if (!$is_auth) {
   header("HTTP/1.0 403 Forbidden");
-  print("Эта страница доступна только для зарегистрированных пользователей");
+  show_error("Эта страница доступна только для зарегистрированных пользователей", [
+    "categories" => $categories,
+    "is_auth" => $is_auth,
+    "user_name" => $user_name,
+    "user_avatar" => $user_avatar
+  ]);
   die();
 }
 
@@ -24,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!is_numeric($_POST[$key])) {
       $errors[$key] = isset($errors[$key]) ? $errors[$key] : "Это поле должно быть числом";
     } else if ($_POST[$key] <= 0) {
-      $errors[$key] =  isset($errors[$key]) ? $errors[$key] : "Это поле должно быть больше нуля";
+      $errors[$key] = isset($errors[$key]) ? $errors[$key] : "Это поле должно быть больше нуля";
     }
   }
 
@@ -36,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors["completion_date"] = isset($errors["completion_date"]) ? $errors["completion_date"] : "Введите дату в формате ДД.ММ.ГГГГ";
   } elseif (!is_date_valid($_POST["completion_date"])) {
     $errors["completion_date"] = "Введите корректную дату";
-  } elseif (strtotime($_POST["completion_date"]) <= strtotime("today")) {
+  } elseif (compare_dates_without_time($_POST["completion_date"], strtotime("today"), "<=")) {
     $errors["completion_date"] = "Указанная дата должна быть больше текущей даты хотя бы на один день";
   }
 
@@ -52,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       move_uploaded_file($tmp_name, "img/" . $path);
       $lot["image_url"] = "img/" . $path;
     }
-  } else {
+  } elseif (empty($lot["image_url"])) {
     $errors["file"] = "Вы не загрузили файл";
   }
 

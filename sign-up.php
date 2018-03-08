@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ]);
   }
 
-  if (!empty($_FILES["avatar"]["name"])) {
-    $tmp_name = $_FILES["avatar"]["tmp_name"];
-    $path = $_FILES["avatar"]["name"];
+  if (!empty($_FILES["avatar_img"]["name"])) {
+    $tmp_name = $_FILES["avatar_img"]["tmp_name"];
+    $path = $_FILES["avatar_img"]["name"];
     $file_type = mime_content_type($tmp_name);
 
     if ($file_type !== "image/jpeg" && $file_type !== "image/png") {

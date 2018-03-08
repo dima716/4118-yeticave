@@ -49,13 +49,13 @@ if (isset($_GET["id"])) {
       if ($result) {
         $rates = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        $is_lot_completed = strtotime("now") > strtotime($lot["completion_date"]);
+        $is_lot_completed = compare_dates_without_time("today", $lot["completion_date"], ">=");
         $is_lot_created_by_current_user = $lot["author_id"] === $user_id;
         $is_current_user_made_rate = false;
 
         $lot["current_price"] = $lot["starting_price"];
 
-        foreach ($rates as $rate) {
+        foreach ($rates as &$rate) {
           if ($rate["user_id"] === $user_id) {
             $is_current_user_made_rate = true;
           }

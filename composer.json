@@ -1,0 +1,14 @@
+{
+    "name": "dima716/4118-yeticave",
+    "type": "project",
+    "authors": [
+        {
+            "name": "dima716",
+            "email": "dima716@yandex.ru"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0",
+        "nesbot/carbon": "^1.23"
+    }
+}

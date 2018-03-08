@@ -11,11 +11,11 @@ VALUES
   ('Разное', 'other');
 
 INSERT INTO users
-(email, name, password, registration_date)
+(email, name, password, registration_date, contacts)
 VALUES
-  ('ignat.v@gmail.com', 'Игнат', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', NOW()),
-  ('kitty_93@li.ru', 'Леночка', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', NOW()),
-  ('warrior07@mail.ru', 'Руслан', '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', NOW());
+  ('ignat.v@gmail.com', 'Игнат', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', NOW(), 'Позвоните по телефону 999999'),
+  ('kitty_93@li.ru', 'Леночка', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', NOW(), 'Позвоните по телефону 999999'),
+  ('warrior07@mail.ru', 'Руслан', '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW', NOW(), 'Позвоните по телефону 999999');
 
 INSERT INTO lots
 (name, description, image_url, starting_price, rate_step, creation_date, completion_date, category_id, author_id)
@@ -81,7 +81,6 @@ FROM rates r
         FROM rates) sub ON DATE(r.placement_date) = sub.last_placement_date
 WHERE r.lot_id = 3;
 
-
 SELECT
   r.id,
   r.placement_date,
@@ -93,3 +92,5 @@ FROM rates r
   JOIN users u ON u.id = r.user_id
 WHERE r.lot_id = 5
 ORDER BY r.placement_date DESC;
+
+

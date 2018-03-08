@@ -30,7 +30,15 @@
 
 /* Общее */
 
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   min-width: 1140px;
   background-color: #dbe6e9;
   font-family: "PT Sans", sans-serif;
@@ -912,6 +920,7 @@ input:invalid .form__error{
 
 .form__item--uploaded .preview {
   display: block;
+  pointer-events: none;
 }
 
 /* Страница лота */
