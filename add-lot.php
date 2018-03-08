@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors["completion_date"] = isset($errors["completion_date"]) ? $errors["completion_date"] : "Введите дату в формате ДД.ММ.ГГГГ";
   } elseif (!is_date_valid($_POST["completion_date"])) {
     $errors["completion_date"] = "Введите корректную дату";
-  } elseif (compare_dates_without_time($_POST["completion_date"], strtotime("today"), "<=")) {
+  } elseif (compare_dates_without_time($_POST["completion_date"], "today", "<=")) {
     $errors["completion_date"] = "Указанная дата должна быть больше текущей даты хотя бы на один день";
   }
 
