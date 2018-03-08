@@ -20,26 +20,8 @@ if ($is_auth) {
 if (file_exists("config/db.php")) {
   $db = require_once "config/db.php";
 } else {
-  print("Пожалуйста, создайте папку config в корне проекта и в ней файл db.php, указав в нем необходимые данные для доступа к бд:<br />");
-  print("<br/>");
-  print("host - адрес, где находится сервер<br />");
-  print("user - имя пользователя для подключения<br />");
-  print("password -  пароль пользователя<br />");
-  print("database - имя базы данных для работы<br />");
-  print("<br/>");
-  print("Пример файла: <br />");
-  print("<br/>");
-  print("
-  <code>
-    &lt;?php </br>
-    return [</br>
-      &quot;host&quot; =&gt; &quot;localhost&quot;,</br>
-      &quot;user&quot; =&gt; &quot;root&quot;,</br>
-      &quot;password&quot; =&gt; &quot;password&quot;,</br>
-      &quot;database&quot; =&gt; &quot;yeticave&quot;</br>
-    ];
-   </code>
-  ");
+  $dbmessage = include_template("templates/db.php", []);
+  print($dbmessage);
   die();
 }
 
