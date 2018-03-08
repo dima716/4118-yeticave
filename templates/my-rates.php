@@ -7,13 +7,13 @@
           class="rates__item <?= $rate["is_winner"] ? "rates__item--win" : "" ?> <?= $rate["is_completed"] ? "rates__item--end" : "" ?>">
           <td class="rates__info">
             <div class="rates__img">
-              <img src="<?= $rate["lot_image_url"] ?>" width="54" height="40" alt="<?= $rate["lot_name"] ?>">
+              <img src="<?= $rate["lot_image_url"] ?>" width="54" height="40" alt="<?= htmlspecialchars($rate["lot_name"]) ?>">
             </div>
             <div>
-              <h3 class="rates__title"><a href="lot.php?id=<?= $rate["lot_id"] ?>"><?= $rate["lot_name"] ?></a>
+              <h3 class="rates__title"><a href="lot.php?id=<?= $rate["lot_id"] ?>"><?= htmlspecialchars($rate["lot_name"]) ?></a>
               </h3>
               <?php if ($rate["is_winner"]): ?>
-                <p><?= $rate["author_contacts"] ?></p>
+                <p><?= htmlspecialchars($rate["author_contacts"]) ?></p>
               <?php endif; ?>
             </div>
           </td>

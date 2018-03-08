@@ -9,20 +9,20 @@
       <p class="lot-item__description"><?= htmlspecialchars($lot["description"]) ?></p>
     </div>
     <div class="lot-item__right">
-      <?php if ($is_rates_shown) : ?>
-        <div class="lot-item__state">
-          <div class="lot-item__timer timer">
-            <?= count_time_until_end($lot["completion_date"]) ?>
+      <div class="lot-item__state">
+        <div class="lot-item__timer timer">
+          <?= count_time_until_end($lot["completion_date"]) ?>
+        </div>
+        <div class="lot-item__cost-state">
+          <div class="lot-item__rate">
+            <span class="lot-item__amount">Текущая цена</span>
+            <span class="lot-item__cost"><?= format_price($lot["current_price"]) ?></span>
           </div>
-          <div class="lot-item__cost-state">
-            <div class="lot-item__rate">
-              <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?= format_price($lot["current_price"]) ?></span>
-            </div>
-            <div class="lot-item__min-cost">
-              Мин. ставка <span><?= format_price($lot["current_price"] + $lot["rate_step"]) ?></span>
-            </div>
+          <div class="lot-item__min-cost">
+            Мин. ставка <span><?= format_price($lot["current_price"] + $lot["rate_step"]) ?></span>
           </div>
+        </div>
+        <?php if ($is_rates_shown) : ?>
           <form class="lot-item__form" action="add-rate.php" method="post" <?= isset($errors) ? "form--invalid" : "" ?>
           ">
           <p class="lot-item__form-item <?= isset($errors["rate"]) ? "form__item--invalid" : "" ?>">
@@ -35,8 +35,8 @@
           </p>
           <button type="submit" class="button">Сделать ставку</button>
           </form>
-        </div>
-      <?php endif; ?>
+        <?php endif; ?>
+      </div>
       <div class="history">
         <h3>История ставок</h3>
         <table class="history__list">
