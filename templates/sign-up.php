@@ -25,18 +25,22 @@
     <span class="form__error"><?= $errors["message"] ?></span>
   </div>
   <div
-    class="form__item form__item--file form__item--last <?= isset($errors["file"]) ? "form__item--invalid" : "" ?> <?= isset($user_data["avatar"]) ? "form__item--uploaded" : "" ?>">
+    class="form__item form__item--file form__item--last <?= isset($errors["file"]) ? "form__item--invalid" : "" ?> <?= !empty($user_data["avatar"]) ? "form__item--uploaded" : "" ?>">
     <label>Аватар</label>
     <div class="preview">
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
-        <img src="<?= isset($user_data["avatar"]) ? htmlspecialchars($user_data["avatar"]) : "" ?>" width="113" height="113"
+        <?php if (!empty($user_data["avatar"])): ?>
+        <img src="<?= htmlspecialchars($user_data["avatar"]) ?>" width="113" height="113"
           alt="Ваш аватар">
+        <?php endif; ?>
       </div>
     </div>
     <div class="form__input-file">
-      <input class="visually-hidden" name="avatar" type="file" id="avatar" value="" required>
-      <label for="avatar">
+      <input class="visually-hidden" name="avatar" type="hidden" id="avatar"
+        value="<?= isset($user_data["avatar"]) ? $user_data["avatar"] : "" ?>">
+      <input class="visually-hidden" name="avatar_img" type="file" id="avatar_img" value="" required>
+      <label for="avatar_img">
         <span>+ Добавить</span>
       </label>
     </div>

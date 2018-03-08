@@ -920,6 +920,7 @@ input:invalid .form__error{
 
 .form__item--uploaded .preview {
   display: block;
+  pointer-events: none;
 }
 
 /* Страница лота */

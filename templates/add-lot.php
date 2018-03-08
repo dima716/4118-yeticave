@@ -1,4 +1,5 @@
-<form class="form form--add-lot container <?= isset($errors) ? "form--invalid" : "" ?>" action="add-lot.php" method="post"
+<form class="form form--add-lot container <?= isset($errors) ? "form--invalid" : "" ?>" action="add-lot.php"
+  method="post"
   enctype="multipart/form-data" novalidate>
   <!-- form--invalid -->
   <h2>Добавление лота</h2>
@@ -29,19 +30,23 @@
   </div>
   <div class="form__item form__item--file
               <?= isset($errors["file"]) ? "form__item--invalid" : "" ?>
-              <?= isset($lot["image_url"]) ? "form__item--uploaded" : "" ?>">
+              <?= !empty($lot["image_url"]) ? "form__item--uploaded" : "" ?>">
     <label>Изображение</label>
     <div class="preview">
       <button class="preview__remove" type="button">x</button>
       <div class="preview__img">
-        <img
-          src="<?= isset($lot["image_url"]) ? htmlspecialchars($lot["image_url"]) : "" ?>"
-          width="113"
-          height="113"
-          alt="Изображение лота">
+        <?php if (!empty($lot["image_url"])): ?>
+          <img
+            src="<?= htmlspecialchars($lot["image_url"]) ?>"
+            width="113"
+            height="113"
+            alt="Изображение лота">
+        <?php endif; ?>
       </div>
     </div>
     <div class="form__input-file">
+      <input class="visually-hidden" name="image_url" type="hidden" id="image_url"
+        value="<?= isset($lot["image_url"]) ? $lot["image_url"] : "" ?>">
       <input class="visually-hidden" name="lot_img" type="file" id="lot_img" required>
       <label for="lot_img">
         <span>+ Добавить</span>

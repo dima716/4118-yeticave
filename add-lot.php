@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       move_uploaded_file($tmp_name, "img/" . $path);
       $lot["image_url"] = "img/" . $path;
     }
-  } else {
+  } elseif (empty($lot["image_url"])) {
     $errors["file"] = "Вы не загрузили файл";
   }
 
